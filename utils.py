@@ -4,6 +4,7 @@ import sys
 MAX_CLIENTS = 50
 
 def create_socket(ip_address, port):
+    """Creates and returns a nonblocking TCP socket"""
     try:
         return_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         return_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -18,6 +19,7 @@ def create_socket(ip_address, port):
 
 
 class Client:
+    """A class to handle each client"""
 
     def __init__(self, socket):
         self.socket = socket
