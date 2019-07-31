@@ -1,18 +1,19 @@
+# System libraries
 import argparse
 import select
 import socket
 import sys
+
+# Local libraries
 from utils import *
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='PyChat Server Application')
 parser.add_argument('-i', metavar='IP', dest='ip_addr', required=True,
                     help='The IP address of this machine')
-parser.add_argument('-p', metavar='PORT', dest='port', required=True,
-                    help='The port on which to receive data')
 args = parser.parse_args()
 ip_address = args.ip_addr
-port = int(args.port)
+port = SERVER_PORT
 
 # Initialize a list to hold all client connections
 listen_list = []

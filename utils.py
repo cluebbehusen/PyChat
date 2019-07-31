@@ -1,7 +1,9 @@
+# System libraries
 import socket
 import sys
 
 MAX_CLIENTS = 50
+SERVER_PORT = 7612
 
 def create_socket(ip_address, port):
     """Creates and returns a nonblocking TCP socket"""
