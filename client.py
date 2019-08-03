@@ -14,22 +14,10 @@ args = parser.parse_args()
 ip_address = args.ip_addr
 port = SERVER_PORT
 
-try:
-    server_connection_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_connection_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_connection_socket.connect((ip_address, port))
-except Exception as e:
-    print('[!] Error: Failed to set up server connection')
-    print(e)
-    sys.exit(1)
+server_connection_socket = create_socket(ip_address, port)
 
-print('Successfully connected to server.')
-print('Type messages at any point')
-
-connection_list = []
-
-connection_list.append(sys.stdin)
-connection_list.append(server_connection_socket)
+print('[*] Successfully connected to server.')
+print('[*] Type messages at any point')
 
 while True:
     ready_connections, w_l, x_l = select.select(connection_list, [], [])
