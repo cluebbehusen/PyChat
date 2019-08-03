@@ -18,3 +18,10 @@ def create_socket(ip_address, port, server=False):
         print('[!] An error occurred while setting up the socket.')
         print(e)
         sys.exit(1)
+
+class Client:
+
+    def __init__(self, socket, address):
+        self.socket = socket
+        self.address = address
+        self.name = None

@@ -22,13 +22,17 @@ clients_info = dict()
 server_socket = create_socket(ip_address, port, True)
 
 def handle_client(client):
-    pass
+    name = client.recv(1024).decode('utf-8')
+    welcome_message = ('Welcome, {}'.format(name))
+    client.send(bytes(welcome_message, 'utf-8'))
 
 if __name__ == '__main__':
     while True:
         new_client, new_client_address = server_socket.accept()
+        print(new_client)
+        print(type(new_client))
         print('[*] New Client Connected: {}:{}'.format(
               new_client_address[0], new_client_address[1]))
         new_client.send(bytes('Enter your name: ', 'utf-8'))
         clients_info[new_client] = new_client_address
-        # Thread(target=handle_client, args=(client,)).start()
+        Thread(target=handle_client, args=(new_client,)).start()
