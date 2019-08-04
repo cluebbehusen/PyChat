@@ -16,23 +16,32 @@ ip_address = args.ip_addr
 port = SERVER_PORT
 
 # Initialize a dictionary of client addresses
-clients_info = dict()
+client_info = dict()
 
 # Setup the main server socket
 server_socket = create_socket(ip_address, port, True)
 
 def handle_client(client):
-    name = client.recv(1024).decode('utf-8')
-    welcome_message = ('Welcome, {}'.format(name))
-    client.send(bytes(welcome_message, 'utf-8'))
+    client.get_name()
+    while True:
+        client_message = client.socket.recv(1024)
+        if client_message:
+            message = client_message.decode('utf-8')
+            broadcast(message, client)
+
+def broadcast(message, client):
+    send_message = ('{}: {}'.format(client.name, message))
+    for available_client in client_info.keys():
+        client_info[available_client].socket.send(bytes(send_message, 'utf-8'))
 
 if __name__ == '__main__':
+    print('[*] Server Started: {}:{}\n'.format(ip_address, port))
+    print('[*] Awaiting Connections...')
     while True:
-        new_client, new_client_address = server_socket.accept()
-        print(new_client)
-        print(type(new_client))
+        client_socket, client_address = server_socket.accept()
         print('[*] New Client Connected: {}:{}'.format(
-              new_client_address[0], new_client_address[1]))
-        new_client.send(bytes('Enter your name: ', 'utf-8'))
-        clients_info[new_client] = new_client_address
-        Thread(target=handle_client, args=(new_client,)).start()
+              client_address[0], client_address[1]))
+        client_socket.send(bytes('[*] Enter your name: ', 'utf-8'))
+        client = Client(client_socket, client_address)
+        client_info[client_socket] = client
+        Thread(target=handle_client, args=(client,)).start()

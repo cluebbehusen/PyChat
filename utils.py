@@ -25,3 +25,12 @@ class Client:
         self.socket = socket
         self.address = address
         self.name = None
+
+    def get_name(self):
+        """Gets the clients name and sends a welcome message"""
+        # At this point, the client should be entering their name
+        name = self.socket.recv(1024).decode('utf-8')
+        self.name = name
+        # Upon receiving the name, send a welcome message
+        welcome_message = ('Welcome, {}'.format(self.name))
+        self.socket.send(bytes(welcome_message, 'utf-8'))
