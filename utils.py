@@ -4,6 +4,13 @@ import sys
 
 MAX_CLIENTS = 5
 SERVER_PORT = 47774
+CURSOR_UP_ONE = '\x1b[1A'
+ERASE_LINE = '\x1b[2K'
+
+def erase_last_lines(n=1):
+    for _ in range(n):
+        sys.stdout.write(CURSOR_UP_ONE)
+        sys.stdout.write(ERASE_LINE)
 
 def create_socket(ip_address, port, server=False):
     """Creates and returns a nonblocking TCP socket"""
@@ -30,6 +37,7 @@ class Client:
         """Gets the clients name and sends a welcome message"""
         # At this point, the client should be entering their name
         name = self.socket.recv(1024).decode('utf-8')
+        name = name.strip()
         self.name = name
         # Upon receiving the name, send a welcome message
         welcome_message = ('Welcome, {}'.format(self.name))

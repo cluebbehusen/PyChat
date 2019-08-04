@@ -11,9 +11,11 @@ from utils import *
 parser = argparse.ArgumentParser(description='PyChat Server Application')
 parser.add_argument('-i', metavar='IP', dest='ip_addr', required=True,
                     help='The IP address of this machine')
+parser.add_argument('-p', metavar='PORT', dest='port', required=False,
+                    default=SERVER_PORT, help='The port of the server')
 args = parser.parse_args()
 ip_address = args.ip_addr
-port = SERVER_PORT
+port = args.port
 
 # Initialize a dictionary of client addresses
 client_info = dict()
@@ -30,7 +32,7 @@ def handle_client(client):
             broadcast(message, client)
 
 def broadcast(message, client):
-    send_message = ('{}: {}'.format(client.name, message))
+    send_message = ('[{}]: {}'.format(client.name, message))
     for available_client in client_info.keys():
         client_info[available_client].socket.send(bytes(send_message, 'utf-8'))
 
