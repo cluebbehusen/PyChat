@@ -43,7 +43,6 @@ if __name__ == '__main__':
         client_socket, client_address = server_socket.accept()
         print('[*] New Client Connected: {}:{}'.format(
               client_address[0], client_address[1]))
-        client_socket.send(bytes('[*] Enter your name: ', 'utf-8'))
         client = Client(client_socket, client_address)
         client_info[client_socket] = client
         Thread(target=handle_client, args=(client,)).start()
