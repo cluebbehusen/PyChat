@@ -40,5 +40,5 @@ class Client:
         name = name.strip()
         self.name = name
         # Upon receiving the name, send a welcome message
-        welcome_message = ('Welcome, {}'.format(self.name))
+        welcome_message = ('Welcome, {}. You are now connected. Type messages at any point.\n'.format(self.name))
         self.socket.send(bytes(welcome_message, 'utf-8'))
