@@ -4,6 +4,7 @@ import sys
 
 MAX_CLIENTS = 5
 SERVER_PORT = 47774
+SERVER_IP = '127.0.0.1'
 CURSOR_UP_ONE = '\x1b[1A'
 ERASE_LINE = '\x1b[2K'
 
@@ -32,6 +33,7 @@ class Client:
         self.socket = socket
         self.address = address
         self.name = None
+        self.thread = None
 
     def get_name(self):
         """Gets the clients name and sends a welcome message"""
@@ -40,5 +42,5 @@ class Client:
         name = name.strip()
         self.name = name
         # Upon receiving the name, send a welcome message
-        welcome_message = ('Welcome, {}'.format(self.name))
+        welcome_message = ('Welcome, {}. You are now connected. Type messages at any point.\n'.format(self.name))
         self.socket.send(bytes(welcome_message, 'utf-8'))
