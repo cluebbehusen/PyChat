@@ -1,6 +1,5 @@
 # System libraries
 import argparse
-import readline
 import select
 import socket
 import sys
