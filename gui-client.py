@@ -28,3 +28,9 @@ except ConnectionRefusedError:
 
 # A list for use with the select function
 possible_input_streams = [sys.stdin, server_connection_socket]
+
+# Create the tkinter window
+main_window = tkinter.Tk()
+main_window.title('PyChat Client')
+entry_label = tkinter.Label(main_window, text='Enter text here').pack()
+main_window.mainloop()
