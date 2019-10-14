@@ -11,7 +11,7 @@ from utils import *
 parser = argparse.ArgumentParser(description='PyChat Server Application')
 parser.add_argument('-i', metavar='IP', dest='ip_addr', required=False,
                     default=SERVER_IP, help='The IP address of this machine')
-parser.add_argument('-p', metavar='PORT', dest='port', required=False,
+parser.add_argument('-p', metavar='PORT', dest='port', required=False, type=int,
                     default=SERVER_PORT, help='The port of the server')
 args = parser.parse_args()
 ip_address = args.ip_addr
@@ -32,8 +32,13 @@ def handle_client(client):
             if client_message:
                 message = client_message.decode('utf-8')
                 broadcast(message, client)
+            else:
+                print('[!] Lost connection to {}:{}'.format(
+                      client.address[0], client.address[1]))
+                socket_active = False
         except OSError:
             socket_active = False
+    client.socket.close()
 
 def broadcast(message, client):
     send_message = ('[{}]: {}'.format(client.name, message))

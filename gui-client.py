@@ -12,7 +12,7 @@ from utils import *
 parser = argparse.ArgumentParser(description='PyChat GUI Client Application')
 parser.add_argument('-i', metavar='IP', dest='ip_addr', required=False,
                     default=SERVER_IP, help='The IP address of the server')
-parser.add_argument('-p', metavar='PORT', dest='port', required=False,
+parser.add_argument('-p', metavar='PORT', dest='port', required=False, type=int,
                     default=SERVER_PORT, help='The port of the server')
 args = parser.parse_args()
 ip_address = args.ip_addr
